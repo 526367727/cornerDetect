@@ -534,10 +534,13 @@ void FindCorners::detectCorners(Mat &Src, vector<Point> &resultCornors, float sc
 		Mat imgCorner2(imageNorm.size(), CV_32F);
 
 		getMin(imgCornerA1 - imgCornerMean, imgCornerB1 - imgCornerMean, imgCornerA);
-		getMin(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		getMax(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		//getMin(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		//这里写错了，论文公式是 mu - min(fc, fd) ，所以应该调用getMax()
 		getMin(imgCornerA, imgCornerB, imgCorner1);
 
-		getMin(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
+		//getMin(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
+		getMax(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
 		getMin(imgCornerC1 - imgCornerMean, imgCornerD1 - imgCornerMean, imgCornerB);
 		getMin(imgCornerA, imgCornerB, imgCorner2);
 
